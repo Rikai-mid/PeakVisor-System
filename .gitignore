@@ -1,0 +1,18 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+.env.bash
+config.local.yml
+
+# Terraform
+.terraform*
+terraform.tfstate
+terraform.tfstate*
+tf.plan
+tfplan.txt
+
+# Vscode
+.vscode
