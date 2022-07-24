@@ -46,6 +46,24 @@ module "asg_private_subnets" {
   public_subnets_enabled  = false
 }
 
+module "bastion_public_subnets" {
+  source                  = "cloudposse/dynamic-subnets/aws"
+  version                 = "2.0.2"
+  namespace               = var.namespace
+  stage                   = var.env
+  name                    = "${var.project_name}-lambda"
+  availability_zones      = var.availability_zones
+  vpc_id                  = module.vpc.vpc_id
+  igw_id                  = [module.vpc.igw_id]
+  ipv4_cidrs              = [{ public = ["10.1.4.0/24", "10.1.5.0/24"], private = [] }]
+  nat_gateway_enabled     = false
+  nat_instance_enabled    = false
+  ipv4_enabled            = true
+  ipv6_enabled            = false
+  private_subnets_enabled = false
+  public_subnets_enabled  = true
+}
+
 module "lambda_public_subnets" {
   source                  = "cloudposse/dynamic-subnets/aws"
   version                 = "2.0.2"
