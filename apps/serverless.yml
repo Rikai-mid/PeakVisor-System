@@ -59,7 +59,7 @@ provider:
     DB_NAME: ${self:custom.config.db_name}
     DB_HOST: ${self:custom.config.db_host}
     DB_USERNAME: ${self:custom.config.db_username}
-    DB_PASSWORD: ${ssm:/PIANOSYSTEM_RDS_PASSWORD}
+    DB_PASSWORD: ${self:custom.config.db_password}
   apiGateway:
     apiKeys:
       - free:
