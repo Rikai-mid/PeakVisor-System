@@ -8,10 +8,14 @@ variable "project_name" {
 }
 
 variable "namespace" {
-  default = "tf"
+  default = "rikai"
 }
 
 # Global variables
+
+variable "region" {
+  default = "ap-northeast-1"
+}
 
 variable "availability_zones" {
   type    = list(string)
@@ -23,3 +27,17 @@ variable "availability_zones" {
 variable "cidr_block" {
   default = "10.1.0.0/16"
 }
+
+# Key pair
+
+variable "ssh_key_path" {
+  default = "./secret"
+}
+
+variable "generate_ssh_key" {
+  default = true
+}
+
+# Database
+
+variable "admin_password" {}
