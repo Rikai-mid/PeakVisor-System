@@ -17,78 +17,81 @@ service: pianosystem
 #org: your-org-name
 
 plugins:
-  - serverless-webpack
-  - serverless-plugin-optimize
-  - serverless-offline
-  - serverless-offline-ssm
-  - serverless-associate-waf
+    - serverless-webpack
+    - serverless-plugin-optimize
+    - serverless-offline
+    - serverless-offline-ssm
+    - serverless-associate-waf
 frameworkVersion: '^3.0.0'
 
 custom:
-  config: ${file(./config.${self:provider.stage}.yml)}
-  associateWaf:
-    name: rikai-dev-pianosystem
-    version: V2
-  serverless-offline-ssm:
-    stages:
-      - offline
-    ssm:
-      'PIANOSYSTEM_RDS_PASSWORD': ""
-  webpack:
-    webpackConfig: 'webpack.config.js'
-    includeModules: true
-    packager: yarn
+    config: ${file(./config.${self:provider.stage}.yml)}
+    associateWaf:
+        name: rikai-dev-pianosystem
+        version: V2
+    serverless-offline-ssm:
+        stages:
+            - offline
+        ssm:
+            'PIANOSYSTEM_RDS_PASSWORD': ''
+    webpack:
+        webpackConfig: 'webpack.config.js'
+        includeModules: true
+        packager: yarn
 
 provider:
-  name: aws
-  runtime: nodejs14.x
-  versionFunctions: false
-  region: ap-northeast-1
-  stage: ${opt:stage, 'local'}
-  timeout: ${self:custom.config.timeout}
-  lambdaHashingVersion: "20201221"
-  iam:
-    role: ${self:custom.config.role_name}
-  vpc:
-    securityGroupIds:
-      - ${self:custom.config.securityGroupId}
-    subnetIds:
-      - ${self:custom.config.subnets_id1}
-      - ${self:custom.config.subnets_id2}
-  environment:
-    DB_NAME: ${self:custom.config.db_name}
-    DB_HOST: ${self:custom.config.db_host}
-    DB_USERNAME: ${self:custom.config.db_username}
-    DB_PASSWORD: ${ssm:/PIANOSYSTEM_RDS_PASSWORD}
-  apiGateway:
-    apiKeys:
-      - free:
-          - myFreeKey
-    usagePlan:
-      - free:
-          quota:
-            limit: 1000
-            offset: 2
-            period: MONTH
-          throttle:
-            burstLimit: 200
-            rateLimit: 100
-  logRetentionInDays: 14
-  logs:
-    restApi:
-      accessLogging: true
-      format: 'requestId: $context.requestId'
-      level: INFO
+    name: aws
+    runtime: nodejs14.x
+    versionFunctions: false
+    region: ap-northeast-1
+    stage: ${opt:stage, 'local'}
+    timeout: ${self:custom.config.timeout}
+    lambdaHashingVersion: '20201221'
+    iam:
+        role: ${self:custom.config.role_name}
+    vpc:
+        securityGroupIds:
+            - ${self:custom.config.securityGroupId}
+        subnetIds:
+            - ${self:custom.config.subnets_id1}
+            - ${self:custom.config.subnets_id2}
+    environment:
+        DB_NAME: ${self:custom.config.db_name}
+        DB_HOST: ${self:custom.config.db_host}
+        DB_USERNAME: ${self:custom.config.db_username}
+        DB_PASSWORD: ${self:custom.config.db_password}
+    apiGateway:
+        apiKeys:
+            - free:
+                  - myFreeKey
+        usagePlan:
+            - free:
+                  quota:
+                      limit: 1000
+                      offset: 2
+                      period: MONTH
+                  throttle:
+                      burstLimit: 200
+                      rateLimit: 100
+    logRetentionInDays: 14
+    logs:
+        restApi:
+            accessLogging: true
+            format: 'requestId: $context.requestId'
+            level: INFO
 
 package:
-  individually: true
-  excludeDevDependencies: true
+    individually: true
+    excludeDevDependencies: true
 
 functions:
-  main:
-    handler: src/lambda.handler
-    events:
-      - http: ANY /
-      - http:
-          method: GET 
-          path: 'blo'
+    main:
+        handler: src/lambda.handler
+        events:
+            - http: ANY /
+            - http:
+                  method: GET
+                  path: 'blo'
+            - http:
+                  method: POST
+                  path: 'auth/create-user'

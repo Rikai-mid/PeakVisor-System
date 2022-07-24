@@ -38,3 +38,8 @@ lerna-debug.log*
 _warmup
 .build
 .webpack
+
+.env
+
+# local
+/.idea
