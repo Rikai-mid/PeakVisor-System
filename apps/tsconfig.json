@@ -1,21 +1,19 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "declaration": true,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "allowSyntheticDefaultImports": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": true,
-    "outDir": "./.build",
-    "baseUrl": "./"
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "declaration": true,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "allowSyntheticDefaultImports": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es6",
+        "sourceMap": true,
+        "outDir": "./.build",
+        "baseUrl": "./"
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
 }

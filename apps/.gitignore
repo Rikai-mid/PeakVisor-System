@@ -40,3 +40,6 @@ _warmup
 .webpack
 
 .env
+
+# local
+/.idea

@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -16,7 +18,8 @@ import { AppService } from './app.service';
             database: process.env.POSTGRES_DATABASE,
             autoLoadEntities: true,
             synchronize: true
-        })
+        }),
+        AuthModule
     ],
     controllers: [AppController],
     providers: [AppService]

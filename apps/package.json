@@ -29,6 +29,7 @@
     "aws-lambda": "^1.0.5",
     "aws-serverless-express": "^3.4.0",
     "global": "^4.4.0",
+    "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^7",
