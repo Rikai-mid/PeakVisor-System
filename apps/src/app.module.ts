@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
+import { EventModule } from './modules/event/event.module';
 
 @Module({
     imports: [
@@ -18,9 +19,10 @@ import { AuthModule } from './modules/auth/auth.module';
             entities: ['/apps/src/modules/**/models/*.entity.{ts,js}'],
             migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
             autoLoadEntities: true,
-            synchronize: false
+            synchronize: true
         }),
-        AuthModule
+        AuthModule,
+        EventModule
     ],
     controllers: [AppController],
     providers: [AppService]
