@@ -4,8 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { UserEntity } from './modules/auth/models/user.entity';
 
 @Module({
     imports: [
@@ -20,7 +18,7 @@ import { UserEntity } from './modules/auth/models/user.entity';
             entities: ['/apps/src/modules/**/models/*.entity.{ts,js}'],
             migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
             autoLoadEntities: true,
-            synchronize: true
+            synchronize: false
         }),
         AuthModule
     ],

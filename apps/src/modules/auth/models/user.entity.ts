@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity('users')
-export class UserEntity {
+export class UserEntity extends BaseEntity {
     @PrimaryColumn()
     user_id: number;
 
