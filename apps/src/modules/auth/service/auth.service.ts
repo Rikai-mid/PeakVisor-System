@@ -9,7 +9,7 @@ import { User } from '../models/user.interface';
 export class AuthService {
     constructor(
         @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>
+        private readonly userRepository: Repository<UserEntity>,
     ) {}
 
     createUser(user: User) {

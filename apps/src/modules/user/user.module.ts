@@ -14,10 +14,10 @@ import { UserProgressEntity } from './models/user-progress.entity';
             SkillScoreEntity,
             LevelEntity,
             SkillScoreEntity,
-            UserProgressEntity
-        ])
+            UserProgressEntity,
+        ]),
     ],
     providers: [EventService],
-    controllers: [UserController]
+    controllers: [UserController],
 })
-export class EventModule {}
+export class UserModule {}

@@ -8,7 +8,7 @@ import { UserProgressHistoryEntity } from '../models/user-progress-history.entit
 export class EventService {
     constructor(
         @InjectRepository(UserProgressHistoryEntity)
-        private readonly userRepository: Repository<UserProgressHistoryEntity>
+        private readonly userRepository: Repository<UserProgressHistoryEntity>,
     ) {}
 
     createUserHistory(userProgressHistory: UserProgressHistory) {

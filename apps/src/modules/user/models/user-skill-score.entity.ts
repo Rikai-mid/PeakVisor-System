@@ -6,7 +6,7 @@ import {
     BaseEntity,
     PrimaryGeneratedColumn,
     ManyToMany,
-    JoinColumn
+    JoinColumn,
 } from 'typeorm';
 
 @Entity('skill_scores')
@@ -16,21 +16,21 @@ export class SkillScoreEntity extends BaseEntity {
 
     @ManyToMany(
         () => UserEntity,
-        user => user.user_id
+        user => user.user_id,
     )
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'user_id'
+        referencedColumnName: 'user_id',
     })
     user_id: UserEntity;
 
     @ManyToMany(
         () => SkillScoreEntity,
-        skillScore => skillScore.score_category_id
+        skillScore => skillScore.score_category_id,
     )
     @JoinColumn({
         name: 'score_category_id',
-        referencedColumnName: 'score_category_id'
+        referencedColumnName: 'score_category_id',
     })
     score_category_id: SkillScoreEntity;
 

@@ -13,10 +13,10 @@ import { PrefectureEntity } from './models/prefecture.entity';
             UserEntity,
             LoginManagementEntity,
             FriendEntity,
-            PrefectureEntity
-        ])
+            PrefectureEntity,
+        ]),
     ],
     providers: [AuthService],
-    controllers: [AuthController]
+    controllers: [AuthController],
 })
 export class AuthModule {}

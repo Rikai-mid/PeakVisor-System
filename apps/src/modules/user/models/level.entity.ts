@@ -5,7 +5,7 @@ import {
     PrimaryColumn,
     BaseEntity,
     ManyToOne,
-    JoinColumn
+    JoinColumn,
 } from 'typeorm';
 
 @Entity('levels')
@@ -15,11 +15,11 @@ export class LevelEntity extends BaseEntity {
 
     @ManyToOne(
         () => ChallengeEntity,
-        challenge => challenge.challenge_id
+        challenge => challenge.challenge_id,
     )
     @JoinColumn({
         name: 'challenge_id',
-        referencedColumnName: 'challenge_id'
+        referencedColumnName: 'challenge_id',
     })
     challenge_id: ChallengeEntity;
 

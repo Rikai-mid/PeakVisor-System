@@ -6,7 +6,7 @@ import {
     OneToOne,
     JoinColumn,
     PrimaryGeneratedColumn,
-    ManyToMany
+    ManyToMany,
 } from 'typeorm';
 import { UserEntity } from '../../auth/models/user.entity';
 import { EventEntity } from './event.entity';
@@ -18,21 +18,21 @@ export class PointEntity extends BaseEntity {
 
     @ManyToMany(
         () => EventEntity,
-        event => event.event_id
+        event => event.event_id,
     )
     @JoinColumn({
         name: 'event_id',
-        referencedColumnName: 'event_id'
+        referencedColumnName: 'event_id',
     })
     event_id: EventEntity;
 
     @ManyToMany(
         () => UserEntity,
-        user => user.user_id
+        user => user.user_id,
     )
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'user_id'
+        referencedColumnName: 'user_id',
     })
     user_id: UserEntity;
 

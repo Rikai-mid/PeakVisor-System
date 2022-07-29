@@ -5,7 +5,7 @@ import {
     PrimaryGeneratedColumn,
     BaseEntity,
     OneToOne,
-    JoinColumn
+    JoinColumn,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 
@@ -16,11 +16,11 @@ export class FriendEntity extends BaseEntity {
 
     @OneToOne(
         () => UserEntity,
-        user => user.user_id
+        user => user.user_id,
     )
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'user_id'
+        referencedColumnName: 'user_id',
     })
     user_id: UserEntity;
 

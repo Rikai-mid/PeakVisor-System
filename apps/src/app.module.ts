@@ -19,12 +19,12 @@ import { EventModule } from './modules/event/event.module';
             entities: ['/apps/src/modules/**/models/*.entity.{ts,js}'],
             migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
             autoLoadEntities: true,
-            synchronize: true
+            synchronize: true,
         }),
         AuthModule,
-        EventModule
+        EventModule,
     ],
     controllers: [AppController],
-    providers: [AppService]
+    providers: [AppService],
 })
 export class AppModule {}

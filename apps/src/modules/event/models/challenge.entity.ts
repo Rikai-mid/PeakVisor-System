@@ -3,10 +3,7 @@ import {
     Entity,
     PrimaryColumn,
     BaseEntity,
-    OneToOne,
-    JoinColumn
 } from 'typeorm';
-import { UserEntity } from '../../auth/models/user.entity';
 
 @Entity('challenges')
 export class ChallengeEntity extends BaseEntity {

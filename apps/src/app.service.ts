@@ -6,7 +6,6 @@ export class AppService {
     return 'Hello World!';
   }
 
-
   getBlo(): string {
     return 'Bloooooo World!';
   }

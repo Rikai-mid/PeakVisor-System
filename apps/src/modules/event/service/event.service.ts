@@ -8,7 +8,7 @@ import { Event } from '../models/event.interface';
 export class EventService {
     constructor(
         @InjectRepository(EventEntity)
-        private readonly eventRepository: Repository<EventEntity>
+        private readonly eventRepository: Repository<EventEntity>,
     ) {}
 
     createEvent(event: Event) {
