@@ -1,4 +1,3 @@
-import { EventEntity } from 'src/modules/event/models/event.entity';
 import {
     Column,
     Entity,
@@ -6,9 +5,10 @@ import {
     BaseEntity,
     OneToOne,
     JoinColumn,
-    PrimaryGeneratedColumn,
+    PrimaryGeneratedColumn
 } from 'typeorm';
 import { UserEntity } from '../../auth/models/user.entity';
+import { EventEntity } from '../../event/models/event.entity';
 import { LevelEntity } from './level.entity';
 
 @Entity('user_progress')
@@ -18,31 +18,31 @@ export class UserProgressEntity extends BaseEntity {
 
     @OneToOne(
         () => UserEntity,
-        user => user.user_id,
+        user => user.user_id
     )
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'user_id',
+        referencedColumnName: 'user_id'
     })
     user_id: UserEntity;
 
     @OneToOne(
         () => LevelEntity,
-        level => level.level_id,
+        level => level.level_id
     )
     @JoinColumn({
         name: 'level_id',
-        referencedColumnName: 'level_id',
+        referencedColumnName: 'level_id'
     })
     level_id: LevelEntity;
 
     @OneToOne(
         () => EventEntity,
-        event => event.event_id,
+        event => event.event_id
     )
     @JoinColumn({
         name: 'event_id',
-        referencedColumnName: 'event_id',
+        referencedColumnName: 'event_id'
     })
     event_id: EventEntity;
 

@@ -4,7 +4,7 @@ import { UserController } from './controller/user.controller';
 import { LevelEntity } from './models/level.entity';
 import { UserProgressHistoryEntity } from './models/user-progress-history.entity';
 import { SkillScoreEntity } from './models/skill-score.entity';
-import { EventService } from './service/event.service';
+import { UserService } from './service/user.service';
 import { UserProgressEntity } from './models/user-progress.entity';
 
 @Module({
@@ -14,10 +14,10 @@ import { UserProgressEntity } from './models/user-progress.entity';
             SkillScoreEntity,
             LevelEntity,
             SkillScoreEntity,
-            UserProgressEntity,
-        ]),
+            UserProgressEntity
+        ])
     ],
-    providers: [EventService],
-    controllers: [UserController],
+    providers: [UserService],
+    controllers: [UserController]
 })
 export class UserModule {}

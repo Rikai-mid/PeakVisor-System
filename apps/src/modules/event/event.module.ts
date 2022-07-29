@@ -5,7 +5,7 @@ import { EventEntity } from './models/event.entity';
 import { PointEntity } from './models/point.entity';
 import { StageEntity } from './models/stages.entity';
 import { EventService } from './service/event.service';
-import {ChallengeEntity} from './models/challenge.entity';
+import { ChallengeEntity } from './models/challenge.entity';
 
 @Module({
     imports: [
@@ -13,10 +13,10 @@ import {ChallengeEntity} from './models/challenge.entity';
             EventEntity,
             PointEntity,
             StageEntity,
-            ChallengeEntity,
-        ]),
+            ChallengeEntity
+        ])
     ],
     providers: [EventService],
-    controllers: [EventController],
+    controllers: [EventController]
 })
 export class EventModule {}

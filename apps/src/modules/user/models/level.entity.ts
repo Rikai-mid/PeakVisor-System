@@ -1,12 +1,12 @@
-import { ChallengeEntity } from 'src/modules/event/models/challenge.entity';
 import {
     Column,
     Entity,
     PrimaryColumn,
     BaseEntity,
     ManyToOne,
-    JoinColumn,
+    JoinColumn
 } from 'typeorm';
+import { ChallengeEntity } from '../../event/models/challenge.entity';
 
 @Entity('levels')
 export class LevelEntity extends BaseEntity {
@@ -15,11 +15,11 @@ export class LevelEntity extends BaseEntity {
 
     @ManyToOne(
         () => ChallengeEntity,
-        challenge => challenge.challenge_id,
+        challenge => challenge.challenge_id
     )
     @JoinColumn({
         name: 'challenge_id',
-        referencedColumnName: 'challenge_id',
+        referencedColumnName: 'challenge_id'
     })
     challenge_id: ChallengeEntity;
 

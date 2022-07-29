@@ -1,13 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserProgressHistory } from '../models/user-history.interface';
-import { EventService } from '../service/event.service';
+import { UserService } from '../service/user.service';
 
 @Controller('user')
 export class UserController {
-    constructor(private eventService: EventService) {}
+    constructor(private userService: UserService) {}
 
     @Post('/create-user')
-    auth(@Body() event: UserProgressHistory) {
-        return this.eventService.createUserHistory(event);
+    auth(@Body() user: UserProgressHistory) {
+        return this.userService.createUserHistory(user);
     }
 }
