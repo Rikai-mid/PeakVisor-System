@@ -123,7 +123,7 @@ module "iam_lambda_utils_policy" {
         "ssm:PutParameter"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter:*"
+      "Resource": "*"
     },
     {
       "Action": [

@@ -1,0 +1,18 @@
+main:
+  handler: src/lambda.handler
+  disableLogs: false
+  logRetentionInDays: 14
+  events:
+      - http: ANY /
+      - http:
+            method: GET
+            path: 'blo'
+      - http:
+            method: POST
+            path: 'auth/create-user'
+  vpc:
+      securityGroupIds:
+          - ${self:custom.config.securityGroupId}
+      subnetIds:
+          - ${self:custom.config.subnets_id1}
+          - ${self:custom.config.subnets_id2}
