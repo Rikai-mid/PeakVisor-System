@@ -60,6 +60,11 @@ provider:
         DB_HOST: ${self:custom.config.db_host}
         DB_USERNAME: ${self:custom.config.db_username}
         DB_PASSWORD: ${self:custom.config.db_password}
+    deploymentBucket:
+      maxPreviousDeploymentArtifacts: 10
+      blockPublicAccess: true
+      versioning: true
+      serverSideEncryption: AES256
     apiGateway:
         apiKeys:
             - free:
@@ -87,6 +92,8 @@ package:
 functions:
     main:
         handler: src/lambda.handler
+        disableLogs: false
+        logRetentionInDays: 14
         events:
             - http: ANY /
             - http:
@@ -95,3 +102,39 @@ functions:
             - http:
                   method: POST
                   path: 'auth/create-user'
+    log_export:
+      runtime: python3.9
+      handler: utils/log_export/lambda_handler.handler
+      role: ${self:custom.config.utils_role_name}
+      disableLogs: false
+      logRetentionInDays: 14
+      environment:
+        S3_BUCKET: ${self:custom.config.s3_log_bucket}
+      events:
+        - eventBridge:
+            enabled: false
+            schedule: cron(0 12 * * ? *)
+    start_rds:
+      runtime: python3.9
+      handler: utils/start_rds/lambda_handler.handler
+      role: ${self:custom.config.utils_role_name}
+      disableLogs: false
+      logRetentionInDays: 30
+      environment:
+        S3_BUCKET: ${self:custom.config.s3_log_bucket}
+      events:
+        - eventBridge:
+            enabled: false
+            schedule: cron(0 22 * * ? *)
+    turnoff_rds:
+      runtime: python3.9
+      handler: utils/turnoff_rds/lambda_handler.handler
+      role: ${self:custom.config.utils_role_name}
+      disableLogs: false
+      logRetentionInDays: 30
+      environment:
+        S3_BUCKET: ${self:custom.config.s3_log_bucket}
+      events:
+        - eventBridge:
+            enabled: false
+            schedule: cron(0 15 * * ? *)

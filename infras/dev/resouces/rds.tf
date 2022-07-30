@@ -17,4 +17,6 @@ module "rds_cluster_aurora" {
   vpc_security_group_ids = [module.sg_rds.id]
   subnets                = module.rds_private_subnets.private_subnet_ids
   zone_id                = [aws_route53_zone.private.zone_id]
+  backup_window          = "19:00-21:00"
+  maintenance_window     = "wed:16:00-wed:17:00"
 }

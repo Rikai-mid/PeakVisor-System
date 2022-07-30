@@ -1,8 +1,10 @@
 timeout: 30
 role_name: "arn:aws:iam::905450884640:role/pianosystem-lambda-role"
+utils_role_name: "arn:aws:iam::905450884640:role/pianosystem-lambda-utils-role"
 subnets_id1: "subnet-00b3482ab3f5733e0"
 subnets_id2: "subnet-0e94a4812195abd0a"
 securityGroupId: "sg-0b390104331b2f465"
 db_name: "pianosystem"
 db_host: "master.pianosystem.pianosystem.vpc"
 db_username: "pianosystem"
+s3_log_bucket: ""
