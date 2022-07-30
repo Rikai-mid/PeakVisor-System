@@ -36,30 +36,34 @@ custom:
             'PIANOSYSTEM_RDS_PASSWORD': ''
     webpack:
         webpackConfig: 'webpack.config.js'
-        includeModules: true
+        concurrency: 4
+        serializedCompile: true
+        includeModules:
+          forceInclude:
+            - pg
         packager: yarn
 
 provider:
     name: aws
     runtime: nodejs14.x
     versionFunctions: false
-    region: ap-northeast-1
+    region: ${self:custom.config.region}
     stage: ${opt:stage, 'local'}
     timeout: ${self:custom.config.timeout}
     lambdaHashingVersion: '20201221'
     iam:
         role: ${self:custom.config.role_name}
-    vpc:
-        securityGroupIds:
-            - ${self:custom.config.securityGroupId}
-        subnetIds:
-            - ${self:custom.config.subnets_id1}
-            - ${self:custom.config.subnets_id2}
     environment:
-        DB_NAME: ${self:custom.config.db_name}
-        DB_HOST: ${self:custom.config.db_host}
-        DB_USERNAME: ${self:custom.config.db_username}
-        DB_PASSWORD: ${self:custom.config.db_password}
+        POSTGRES_HOST: ${self:custom.config.db_host}
+        POSTGRES_PORT: ${self:custom.config.db_port}
+        POSTGRES_DATABASE: ${self:custom.config.db_name}
+        POSTGRES_USER: ${self:custom.config.db_username}
+        POSTGRES_PASSWORD: ${ssm(ap-northeast-1):PIANOSYSTEM_RDS_PASSWORD}
+    deploymentBucket:
+      maxPreviousDeploymentArtifacts: 10
+      blockPublicAccess: true
+      versioning: false
+      serverSideEncryption: AES256
     apiGateway:
         apiKeys:
             - free:
@@ -81,17 +85,13 @@ provider:
             level: INFO
 
 package:
-    individually: true
-    excludeDevDependencies: true
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - '!node_modules/**'
 
 functions:
-    main:
-        handler: src/lambda.handler
-        events:
-            - http: ANY /
-            - http:
-                  method: GET
-                  path: 'blo'
-            - http:
-                  method: POST
-                  path: 'auth/create-user'
+    - ${file(./utils/export.yml)}
+    - ${file(./utils/start_rds.yml)}
+    - ${file(./utils/turnoff_rds.yml)}
+    - ${file(./main.yml)}

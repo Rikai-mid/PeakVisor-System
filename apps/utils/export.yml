@@ -1,0 +1,18 @@
+log_export:
+  runtime: python3.9
+  handler: utils/log_export/log_export.lambda_handler
+  role: ${self:custom.config.utils_role_name}
+  disableLogs: false
+  logRetentionInDays: 14
+  environment:
+    S3_BUCKET: ${self:custom.config.s3_log_bucket}
+    LOG_GROUPS: ${self:custom.config.log_groups}
+  events:
+    - eventBridge:
+        enabled: false
+        schedule: cron(0 12 * * ? *)
+  package:
+    patterns:
+      - '!**'
+      - utils/log_export/**
+    individually: true

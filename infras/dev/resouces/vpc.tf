@@ -89,3 +89,56 @@ resource "aws_route53_zone" "private" {
     vpc_id = module.vpc.vpc_id
   }
 }
+
+module "vpc_endpoints" {
+  source  = "cloudposse/vpc/aws//modules/vpc-endpoints"
+  version = "1.1.0"
+
+  namespace = var.namespace
+  stage     = var.env
+  name      = var.project_name
+  vpc_id    = module.vpc.vpc_id
+
+  gateway_vpc_endpoints = {
+    "s3" = {
+      name = "s3"
+      policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [
+          {
+            Action = [
+              "s3:*",
+            ]
+            Effect    = "Allow"
+            Principal = "*"
+            Resource  = "*"
+          },
+        ]
+      })
+    }
+  }
+}
+
+resource "aws_vpc_endpoint_route_table_association" "rds_private_subnets" {
+  count           = length(module.rds_private_subnets.private_route_table_ids)
+  route_table_id  = module.rds_private_subnets.private_route_table_ids[count.index]
+  vpc_endpoint_id = module.vpc_endpoints.gateway_vpc_endpoints[0].id
+}
+
+resource "aws_vpc_endpoint_route_table_association" "asg_private_subnets" {
+  count           = length(module.asg_private_subnets.private_route_table_ids)
+  route_table_id  = module.asg_private_subnets.private_route_table_ids[count.index]
+  vpc_endpoint_id = module.vpc_endpoints.gateway_vpc_endpoints[0].id
+}
+
+resource "aws_vpc_endpoint_route_table_association" "bastion_public_subnets" {
+  count           = length(module.bastion_public_subnets.public_route_table_ids)
+  route_table_id  = module.bastion_public_subnets.public_route_table_ids[count.index]
+  vpc_endpoint_id = module.vpc_endpoints.gateway_vpc_endpoints[0].id
+}
+
+resource "aws_vpc_endpoint_route_table_association" "lambda_public_subnets" {
+  count           = length(module.lambda_public_subnets.public_route_table_ids)
+  route_table_id  = module.lambda_public_subnets.public_route_table_ids[count.index]
+  vpc_endpoint_id = module.vpc_endpoints.gateway_vpc_endpoints[0].id
+}

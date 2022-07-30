@@ -1,0 +1,20 @@
+start_rds:
+  runtime: python3.9
+  handler: utils/start_rds/start_rds.lambda_handler
+  role: ${self:custom.config.utils_role_name}
+  disableLogs: false
+  logRetentionInDays: 30
+  environment:
+    S3_BUCKET: ${self:custom.config.s3_log_bucket}
+    REGION: ${self:custom.config.region}
+    KEY: Name
+    VALUE: rikai-dev-pianosystem
+  events:
+    - eventBridge:
+        enabled: true
+        schedule: cron(0 22 * * ? *)
+  package:
+    patterns:
+      - '!**'
+      - utils/start_rds/**
+    individually: true
