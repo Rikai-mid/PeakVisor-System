@@ -117,6 +117,17 @@ module "vpc_endpoints" {
       })
     }
   }
+
+  interface_vpc_endpoints = {
+    "execute-api" = {
+      name                = "execute-api"
+      security_group_ids  = [module.vpc.vpc_default_security_group_id]
+      subnet_ids          = module.lambda_public_subnets.public_subnet_ids
+      policy              = null
+      private_dns_enabled = true
+    }
+  }
+
 }
 
 resource "aws_vpc_endpoint_route_table_association" "rds_private_subnets" {
