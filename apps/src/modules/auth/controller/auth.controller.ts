@@ -1,13 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { User } from '../models/user.interface';
+import {Body, Controller, Get, Header, Post} from '@nestjs/common';
+import { Login, User } from '../models/user.interface';
 import { AuthService } from '../service/auth.service';
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @Post('/create-user')
-    auth(@Body() user: User) {
-        return this.authService.createUser(user);
+    @Post('/login')
+    login(@Body() loginParams: any) {
+        return this.authService.checkAuthByWixApi(loginParams);
+    }
+
+    @Get('/test')
+    test() {
+        return this.authService.test();
     }
 }

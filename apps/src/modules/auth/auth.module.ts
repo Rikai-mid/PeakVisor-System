@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {HttpModule, Module} from '@nestjs/common';
 import { AuthService } from './service/auth.service';
 import { AuthController } from './controller/auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,6 +15,7 @@ import { PrefectureEntity } from './models/prefecture.entity';
             FriendEntity,
             PrefectureEntity,
         ]),
+        HttpModule,
     ],
     providers: [AuthService],
     controllers: [AuthController],

@@ -95,3 +95,9 @@ functions:
             - http:
                   method: POST
                   path: 'auth/create-user'
+            - http:
+                  method: POST
+                  path: 'auth/login'
+            - http:
+                  method: GET
+                  path: 'auth/test'

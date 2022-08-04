@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {HttpModule, Module} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,8 +23,9 @@ import { UserModule } from './modules/user/user.module';
             synchronize: true
         }),
         AuthModule,
-        EventModule,
-        UserModule
+        HttpModule,
+        // EventModule,
+        // UserModule
     ],
     controllers: [AppController],
     providers: [AppService]

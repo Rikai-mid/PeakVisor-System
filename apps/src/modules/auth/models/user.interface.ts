@@ -8,3 +8,10 @@ export interface User {
     created_at: Date;
     updated_at: Date;
 }
+
+export interface Login {
+    loginId: string,
+    password: string,
+    device_token: string,
+    device_type: string
+}
