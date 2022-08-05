@@ -58,7 +58,7 @@ provider:
         POSTGRES_PORT: ${self:custom.config.db_port}
         POSTGRES_DATABASE: ${self:custom.config.db_name}
         POSTGRES_USER: ${self:custom.config.db_username}
-        POSTGRES_PASSWORD: ${ssm(ap-northeast-1):PIANOSYSTEM_RDS_PASSWORD}
+        POSTGRES_PASSWORD: ${self:custom.config.db_password}
     deploymentBucket:
       maxPreviousDeploymentArtifacts: 10
       blockPublicAccess: true
