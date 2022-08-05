@@ -9,7 +9,7 @@ import {
 @Entity('users')
 export class UserEntity extends BaseEntity {
     @PrimaryColumn()
-    user_id: number;
+    user_id: string;
 
     @Column()
     wix_user_id: string;

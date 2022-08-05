@@ -1,5 +1,5 @@
 export interface User {
-    user_id: number;
+    user_id: string;
     full_name?: string;
     wix_user_id: string;
     prefeature_id: string;

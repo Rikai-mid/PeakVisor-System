@@ -2,13 +2,21 @@ import { HttpService, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../models/user.entity';
-import cryptoRandomString from 'crypto-random-string';
+// import {PointEntity} from '../../event/models/point.entity';
+// import {SkillScoreEntity} from '../../user/models/skill-score.entity';
+// import {LoginManagementEntity} from '../models/loginManagement.entity';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
+        // @InjectRepository(PointEntity)
+        // private readonly pointRepository: Repository<PointEntity>,
+        // @InjectRepository(SkillScoreEntity)
+        // private readonly skillScoreManagementRepository: Repository<SkillScoreEntity>,
+        // @InjectRepository(LoginManagementEntity)
+        // private readonly loginManagementRepository: Repository<LoginManagementEntity>,
         private readonly httpService: HttpService,
     ) {}
 
@@ -23,19 +31,19 @@ export class AuthService {
         const url = `https://qdee8vinw0.execute-api.ap-northeast-1.amazonaws.com/dev/loginauth` +
             `?mail=${email}&pass=${password}`;
 
-        const checkWixAuth = await this.httpService.post(url).toPromise();
-        const checkWixAuthResult = checkWixAuth.data.body;
+        const rs = await this.httpService.post(url).toPromise();
+        const checkWixAuthResult = rs.data.body;
         const accessToken = this.createAccessToken();
 
-        if (!checkWixAuthResult.authReulst) {
-            return {
-                message: 'MSG001',
-            };
+        if (!checkWixAuthResult.monthlyPaymentStatus) {
+             return {
+                message: 'MSG0002',
+             };
         }
 
-        if (!checkWixAuthResult.monthlyPaymentStatus) {
+        if (!checkWixAuthResult.authResult) {
             return {
-                message: 'MSG0002',
+                message: 'MSG001',
             };
         }
         const user = this.getUserByWixId(checkWixAuthResult.wixUserId);
@@ -44,31 +52,35 @@ export class AuthService {
         };
 
         if (!user) {
-            //      @todo add new user to table users
-            const userCreated = await  this.createUser({});
-            //      @todo add new record to point
+            const userCreated = this.userRepository.save({
+                user_id: email,
+                wix_user_id: checkWixAuthResult.wixUserId,
+                full_name: '',
+                prefeature_id: '',
+            });
+            //      @todo add new record to table point
+            // await  this.pointRepository.save({});
             //      @todo create new record to skill_score_management
+            // await  this.skillScoreManagementRepository.save({});
 
-            return {...results, ...userCreated };
+            return {
+                code: 1000,
+                user: {...results, ...userCreated },
+            };
         }
-        //      @todo add new record to login_management
-        const userLoginManagement = await  this.createUserLoginManagement({});
-        return { ...results, ...userLoginManagement };
+        //      @todo add new record to table login_management
+        // const userLoginManagement = await  this.loginManagementRepository.save({});
+        return {
+            code: 1000,
+            // user: { ...results, ...userLoginManagement },
+        };
     }
 
-    async createUser(userInfo: any) {
-       return this.userRepository.save(userInfo);
-    }
+        getUserByWixId(wixId: string) {
+            return this.userRepository.findOneBy({ wix_user_id : wixId });
+        }
 
-    async createUserLoginManagement(userInfo: any) {
-       return this.userRepository.save(userInfo);
-    }
-
-    getUserByWixId(wixId: string) {
-        return this.userRepository.findOneBy({ wix_user_id : wixId });
-    }
-
-    createAccessToken() {
-        return cryptoRandomString({ length: 36 });
-    }
+        createAccessToken() {
+            return '36 string character';
+        }
 }

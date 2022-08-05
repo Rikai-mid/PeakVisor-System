@@ -20,7 +20,7 @@ import { UserModule } from './modules/user/user.module';
             entities: ['/apps/src/modules/**/models/*.entity.{ts,js}'],
             migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
             autoLoadEntities: true,
-            synchronize: true
+            synchronize: true,
         }),
         AuthModule,
         HttpModule,
@@ -28,6 +28,6 @@ import { UserModule } from './modules/user/user.module';
         // UserModule
     ],
     controllers: [AppController],
-    providers: [AppService]
+    providers: [AppService],
 })
 export class AppModule {}

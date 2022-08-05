@@ -4,7 +4,7 @@ import {
     PrimaryColumn,
     BaseEntity,
     OneToOne,
-    JoinColumn
+    JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../../auth/models/user.entity';
 
@@ -15,11 +15,11 @@ export class EventEntity extends BaseEntity {
 
     @OneToOne(
         () => UserEntity,
-        user => user.user_id
+        user => user.user_id,
     )
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'user_id'
+        referencedColumnName: 'user_id',
     })
     user_id: UserEntity;
 
